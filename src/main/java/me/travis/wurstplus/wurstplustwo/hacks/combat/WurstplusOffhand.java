@@ -27,6 +27,8 @@ public class WurstplusOffhand extends WurstplusHack {
 
     WurstplusSetting gapple_in_hole = create("Gapple In Hole", "OffhandGapple", false);
     WurstplusSetting gapple_hole_hp = create("Gapple Hole HP", "OffhandGappleHP", 8, 0, 36);
+    WurstplusSetting strength_in_hole = create("Strength In Hole", false);
+    WurstplusSetting strength_hole_hp = create("Strength Hole HP", 8, 0, 36);
 
     WurstplusSetting delay = create("Delay", "OffhandDelay", false);
 
@@ -128,4 +130,31 @@ public class WurstplusOffhand extends WurstplusHack {
         return -1;
     }
 
+     private boolean is_in_hole_strength() {
+
+        BlockPos player_block = WurstplusPlayerUtil.GetLocalPlayerPosFloored();
+
+        return mc.world.getBlockState(player_block.east()).getBlock() != Blocks.AIR
+                && mc.world.getBlockState(player_block.west()).getBlock() != Blocks.AIR
+                && mc.world.getBlockState(player_block.north()).getBlock() != Blocks.AIR
+                && mc.world.getBlockState(player_block.south()).getBlock() != Blocks.AIR;
+    }
+    
+    private int get_item_slot(Item input) {
+        if (input == mc.player.getHeldItemOffhand().getItem()) return -1;
+        for(int i = 36; i >= 0; i--) {
+            final Item item = mc.player.inventory.getStackInSlot(i).getItem();
+            if(item == input) {
+                if (i < 9) {
+                    if (input == Items.STRENGTH_2) {
+                        return -1;
+                    }
+                    i += 36;
+                }
+                return i;
+            }
+        }
+        return -1;
+    }
+    
 }
