@@ -2,12 +2,10 @@ package me.travis.wurstplus.wurstplustwo.hacks.combat;
 
 import me.travis.wurstplus.Wurstplus;
 import me.travis.wurstplus.wurstplustwo.guiscreen.settings.WurstplusSetting;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusCategory;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
 import me.travis.wurstplus.wurstplustwo.util.WurstplusPlayerUtil;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
@@ -90,7 +88,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
 // this next part looking kinda nihao to me
 // line 93, disableHP > disableOffhandHP.get_value(1) might be disableHP.get_value(1) > disableOffhandHP
 
-          if (disableHP > disableOffhandHP.get_value(1)) {
+          if (disableHP < disableOnHealthHP.get_value(1)) {
             if(disableOffhandHealth.in("true") swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), 0));
            WurstplusMessageUtil.send_client_message("Disabling Offhand due to health requirement...");
                 this.set_disable();
