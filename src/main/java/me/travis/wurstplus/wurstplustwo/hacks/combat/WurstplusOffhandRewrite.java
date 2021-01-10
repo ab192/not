@@ -30,6 +30,8 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
         WurstplusSetting OffhandHP = create("OffhandHealth", 16, 0, 36);
         WurstplusSetting delay = create("delay", false)
         WurstplusSetting find_in_hotbar = create("HotbarCrystal", false);  
+        WurstplusSetting disableOnHealth = create("DisableOnHealth"), false;
+        WurstplusSetting disableOnHealthHP = create("DisableOnHealthHP" 16, 0, 36);
           
       private boolean switching = false;
       private int last_slot;
@@ -83,10 +85,14 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
 
         mc.playerController.updateController();
     }
-            new_slot = find_in_hotbar();
+           float disableHP = mc.player.getHealth() + mc.player.getAbsorptionAmount();
 
-            if (find_in_hotbar.in("true"(new_slot == 0)) {
-                WurstplusMessageUtil.send_client_error_message("cannot find crystals in your hotbar");
-                set_active(false);
-            }
+// this next part looking kinda nihao to me
+
+          if (disableHP > disableOffhandHP.get_value(1)) {
+            if(disableOffhandHealth.in("true") swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), 0));
+           WurstplusMessageUtil.send_client_message("Disabling Offhand due to health requirement...");
+                this.set_disable();
+            return;
+          }
 }
