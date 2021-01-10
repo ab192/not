@@ -88,6 +88,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
            float disableHP = mc.player.getHealth() + mc.player.getAbsorptionAmount();
 
 // this next part looking kinda nihao to me
+// line 93, disableHP > disableOffhandHP.get_value(1) might be disableHP.get_value(1) > disableOffhandHP
 
           if (disableHP > disableOffhandHP.get_value(1)) {
             if(disableOffhandHealth.in("true") swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), 0));
