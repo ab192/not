@@ -29,7 +29,9 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
         WurstplusSetting mode = create("Offhand", combobox("Crystal"));
         WurstplusSetting OffhandHP = create("OffhandHealth", 16, 0, 36);
         WurstplusSetting delay = create("delay", false)
-          private boolean switching = false;
+        WurstplusSetting find_in_hotbar = create("HotbarCrystal", false);  
+          
+      private boolean switching = false;
       private int last_slot;
   
       @Override
@@ -81,4 +83,10 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
 
         mc.playerController.updateController();
     }
+            new_slot = find_in_hotbar();
+
+            if (new_slot == 0) {
+                WurstplusMessageUtil.send_client_error_message("cannot find crystals in your hotbar");
+                set_active(false);
+            }
 }
