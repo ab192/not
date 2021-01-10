@@ -85,7 +85,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
     }
             new_slot = find_in_hotbar();
 
-            if (new_slot == 0) {
+            if (find_in_hotbar.in("true"(new_slot == 0)) {
                 WurstplusMessageUtil.send_client_error_message("cannot find crystals in your hotbar");
                 set_active(false);
             }
