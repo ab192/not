@@ -19,9 +19,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WurstplusBurrow extends WurstplusHack {
   public () {
-        super("WurstplusCategory.WURSTPLUS_MOVEMENT;
+        super("WurstplusCategory.WURSTPLUS_MOVEMENT);
         
-         this.name        = "Burrow";
+        this.name        = "Burrow";
         this.tag         = "WurstPlusBurrow";
         this.description = "Jumps and phases you into a block";
     }
@@ -31,6 +31,7 @@ public class WurstplusBurrow extends WurstplusHack {
     WurstplusSetting invalidPacket = create("InvalidPacket", false);
     WurstplusSetting rotations = create("Rotations", 5, 1, 10);
     WurstplusSetting timeOut = create("TimeOut", 194, 0, 1000);
+    
     private BlockPos startPos;
     private final Timer timer = new Timer();
     private int lastHotbarSlot = -1;
