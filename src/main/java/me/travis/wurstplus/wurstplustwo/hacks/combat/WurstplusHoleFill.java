@@ -32,6 +32,7 @@ public class WurstplusHoleFill extends WurstplusHack {
     WurstplusSetting hole_rotate = create("Rotate", "HoleFillRotate", true);
     WurstplusSetting hole_range = create("Range", "HoleFillRange", 4, 1, 6);
     WurstplusSetting swing = create("Swing", "HoleFillSwing", "Mainhand", combobox("Mainhand", "Offhand", "Both", "None"));
+    WurstplusSetting onlySafe = create("OnlySafe" true);
 
 
     private final ArrayList<BlockPos> holes = new ArrayList<>();
@@ -127,7 +128,11 @@ public class WurstplusHoleFill extends WurstplusHack {
                 Block block = mc.world.getBlockState(pos.add(seems_blocks)).getBlock();
 
                 if (block != Blocks.BEDROCK && block != Blocks.OBSIDIAN && block != Blocks.ENDER_CHEST && block != Blocks.ANVIL) {
-                    possible = false;
+                    possible = (onlySafe.in("true")) false;
+			else {
+			if (block != Blocks.BEDROCK && block != Blocks.OBSIDIAN && block! Blocks.ENDER_CHEST && block != Blocks.ANVIL)
+		    possible = (onlySafe.in("false)) true;
+			}
                     break;
                 }
             }
