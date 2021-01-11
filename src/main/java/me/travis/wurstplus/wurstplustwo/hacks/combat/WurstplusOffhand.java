@@ -27,8 +27,8 @@ public class WurstplusOffhand extends WurstplusHack {
 
     WurstplusSetting gapple_in_hole = create("Gapple In Hole", "OffhandGapple", false);
     WurstplusSetting gapple_hole_hp = create("Gapple Hole HP", "OffhandGappleHP", 8, 0, 36);
-    WurstplusSetting strength_in_hole = create("Strength On Killaura", false);
-    WurstplusSetting strength_hole_hp = create("Strength Killaura HP", 8, 0, 36);
+//    WurstplusSetting strength_in_hole = create("Strength On Killaura", false);
+//    WurstplusSetting strength_hole_hp = create("Strength Killaura HP", 8, 0, 36);
 
     WurstplusSetting delay = create("Delay", "OffhandDelay", false);
 
@@ -130,7 +130,7 @@ public class WurstplusOffhand extends WurstplusHack {
         return -1;
     }
 
-     private boolean is_in_hole_strength() {
+/**     private boolean is_in_hole_strength() {
 
         BlockPos player_block = WurstplusPlayerUtil.GetLocalPlayerPosFloored();
 
@@ -156,5 +156,5 @@ public class WurstplusOffhand extends WurstplusHack {
         }
         return -1;
     }
-    
+*/    
 }
