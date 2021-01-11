@@ -27,9 +27,11 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
         WurstplusSetting mode = create("Offhand", combobox("Crystal"));
         WurstplusSetting OffhandHP = create("OffhandHealth", 16, 0, 36);
         WurstplusSetting delay = create("delay", false)
-        WurstplusSetting find_in_hotbar = create("HotbarCrystal", false);  
+          
         WurstplusSetting disableOnHealth = create("DisableOnHealth"), false;
         WurstplusSetting disableOnHealthHP = create("DisableOnHealthHP" 16, 0, 36);
+  
+        WurstplusSetting smart = create("SmartOffhand", false);
           
       private boolean switching = false;
       private int last_slot;
@@ -89,9 +91,39 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
 // line 93, disableHP > disableOffhandHP.get_value(1) might be disableHP.get_value(1) > disableOffhandHP
 
           if (disableHP < disableOnHealthHP.get_value(1)) {
-            if(disableOffhandHealth.in("true") swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), 0));
+            if(disableOffhandHealth.get_value(true) swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), 0));
            WurstplusMessageUtil.send_client_message("Disabling Offhand due to health requirement...");
                 this.set_disable();
             return;
           }
+
+private boolean is_in_hole_strength() {
+
+        BlockPos player_block = WurstplusPlayerUtil.GetLocalPlayerPosFloored();
+
+            return mc.world.getBlockState(player_block.east()).getBlock() != Blocks.AIR
+                && mc.world.getBlockState(player_block.west()).getBlock() != Blocks.AIR
+                && mc.world.getBlockState(player_block.north()).getBlock() != Blocks.AIR
+                && mc.world.getBlockState(player_block.south()).getBlock() != Blocks.AIR;
+    }
+    
+    private int get_item_slot(Item input) {
+        if (input == mc.player.getHeldItemOffhand().getItem()) return -1;
+        for(int i = 36; i >= 0; i--) {
+            final Item item = mc.player.inventory.getStackInSlot(i).getItem();
+            if(item == input) {
+                if (i < 9) {
+                    if (input == Items.STRENGTH_2) {
+                        return -1;
+                    }
+                    i += 36;
+                }
+                return i;
+            }
+        }
+        return -1;
+        if (smart.get_value(true) && mc.player.isPotionActive(MobEffects.STRENGTH_2)) {
+            swap_items(get_item_slot(Items.GOLDEN_APPLE), delay.get_value(true) ? 1 : 0);
+        }
+    }
 }
