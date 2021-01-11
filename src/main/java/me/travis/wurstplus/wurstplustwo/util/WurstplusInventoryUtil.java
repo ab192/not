@@ -43,7 +43,7 @@ public class WurstplusInventoryUtil {
     public static void switchToHotbarSlot(Class clazz, boolean silent) {
         int slot = WurstplusInventoryUtil.findHotbarBlock(clazz);
         if (slot > -1) {
-            InventoryUtil.switchToHotbarSlot(slot, silent);
+            WurstplusInventoryUtil.switchToHotbarSlot(slot, silent);
         }
     }
 
@@ -54,7 +54,7 @@ public class WurstplusInventoryUtil {
     public static int findHotbarBlock(Class clazz) {
         for (int i = 0; i < 9; ++i) {
             Block block;
-            ItemStack stack = InventoryUtil.mc.player.inventory.getStackInSlot(i);
+            ItemStack stack = WurstplusInventoryUtil.mc.player.inventory.getStackInSlot(i);
             if (stack == ItemStack.EMPTY) continue;
             if (clazz.isInstance((Object)stack.getItem())) {
                 return i;
@@ -68,7 +68,7 @@ public class WurstplusInventoryUtil {
     public static int findHotbarBlock(Block blockIn) {
         for (int i = 0; i < 9; ++i) {
             Block block;
-            ItemStack stack = InventoryUtil.mc.player.inventory.getStackInSlot(i);
+            ItemStack stack = WurstplusInventoryUtil.mc.player.inventory.getStackInSlot(i);
             if (stack == ItemStack.EMPTY || !(stack.getItem() instanceof ItemBlock) || (block = ((ItemBlock)stack.getItem()).getBlock()) != blockIn) continue;
             return i;
         }
@@ -77,7 +77,7 @@ public class WurstplusInventoryUtil {
 
     public static int getItemHotbar(Item input) {
         for (int i = 0; i < 9; ++i) {
-            Item item = InventoryUtil.mc.player.inventory.getStackInSlot(i).getItem();
+            Item item = WurstplusInventoryUtil.mc.player.inventory.getStackInSlot(i).getItem();
             if (Item.getIdFromItem((Item)item) != Item.getIdFromItem((Item)input)) continue;
             return i;
         }
@@ -85,14 +85,14 @@ public class WurstplusInventoryUtil {
     }
 
     public static int findStackInventory(Item input) {
-        return InventoryUtil.findStackInventory(input, false);
+        return WurstplusInventoryUtil.findStackInventory(input, false);
     }
 
     public static int findStackInventory(Item input, boolean withHotbar) {
         int i;
         int n = i = withHotbar ? 0 : 9;
         while (i < 36) {
-            Item item = InventoryUtil.mc.player.inventory.getStackInSlot(i).getItem();
+            Item item = WurstplusInventoryUtil.mc.player.inventory.getStackInSlot(i).getItem();
             if (Item.getIdFromItem((Item)input) == Item.getIdFromItem((Item)item)) {
                 return i + (i < 9 ? 36 : 0);
             }
@@ -161,7 +161,7 @@ public class WurstplusInventoryUtil {
     private static Map<Integer, ItemStack> getInventorySlots(int currentI, int last) {
         HashMap<Integer, ItemStack> fullInventorySlots = new HashMap<Integer, ItemStack>();
         for (int current = currentI; current <= last; ++current) {
-            fullInventorySlots.put(current, (ItemStack)InventoryUtil.mc.player.inventoryContainer.getInventory().get(current));
+            fullInventorySlots.put(current, (ItemStack)WurstplusInventoryUtil.mc.player.inventoryContainer.getInventory().get(current));
         }
         return fullInventorySlots;
     }
@@ -171,10 +171,10 @@ public class WurstplusInventoryUtil {
         switch (mode) {
             case NORMAL: {
                 if (!back && !switchedItem) {
-                    InventoryUtil.switchToHotbarSlot(InventoryUtil.findHotbarBlock(clazz), false);
+                    WurtsplusInventoryUtil.switchToHotbarSlot(WurstplusInventoryUtil.findHotbarBlock(clazz), false);
                     switchedItemSwitched[0] = true;
                 } else if (back && switchedItem) {
-                    InventoryUtil.switchToHotbarSlot(lastHotbarSlot, false);
+                    WurstplusInventoryUtil.switchToHotbarSlot(lastHotbarSlot, false);
                     switchedItemSwitched[0] = false;
                 }
                 switchedItemSwitched[1] = true;
@@ -182,7 +182,7 @@ public class WurstplusInventoryUtil {
             }
             case SILENT: {
                 if (!back && !switchedItem) {
-                    InventoryUtil.switchToHotbarSlot(InventoryUtil.findHotbarBlock(clazz), true);
+                    WurstplusInventoryUtil.switchToHotbarSlot(WurstplusInventoryUtil.findHotbarBlock(clazz), true);
                     switchedItemSwitched[0] = true;
                 } else if (back && switchedItem) {
                     switchedItemSwitched[0] = false;
@@ -192,7 +192,7 @@ public class WurstplusInventoryUtil {
                 break;
             }
             case NONE: {
-                switchedItemSwitched[1] = back ? true : InventoryUtil.mc.player.inventory.currentItem == InventoryUtil.findHotbarBlock(clazz);
+                switchedItemSwitched[1] = back ? true : WurstplusInventoryUtil.mc.player.inventory.currentItem == WurstplusInventoryUtil.findHotbarBlock(clazz);
             }
         }
         return switchedItemSwitched;
@@ -203,10 +203,10 @@ public class WurstplusInventoryUtil {
         switch (mode) {
             case NORMAL: {
                 if (!back && !switchedItem) {
-                    InventoryUtil.switchToHotbarSlot(InventoryUtil.getItemHotbar(item), false);
+                    WurstplusInventoryUtil.switchToHotbarSlot(WurstplusInventoryUtil.getItemHotbar(item), false);
                     switchedItemSwitched[0] = true;
                 } else if (back && switchedItem) {
-                    InventoryUtil.switchToHotbarSlot(lastHotbarSlot, false);
+                    WurstplusInventoryUtil.switchToHotbarSlot(lastHotbarSlot, false);
                     switchedItemSwitched[0] = false;
                 }
                 switchedItemSwitched[1] = true;
@@ -214,7 +214,7 @@ public class WurstplusInventoryUtil {
             }
             case SILENT: {
                 if (!back && !switchedItem) {
-                    InventoryUtil.switchToHotbarSlot(InventoryUtil.getItemHotbar(item), true);
+                    WurstplusInventoryUtil.switchToHotbarSlot(WurstplusInventoryUtil.getItemHotbar(item), true);
                     switchedItemSwitched[0] = true;
                 } else if (back && switchedItem) {
                     switchedItemSwitched[0] = false;
@@ -224,7 +224,7 @@ public class WurstplusInventoryUtil {
                 break;
             }
             case NONE: {
-                switchedItemSwitched[1] = back ? true : InventoryUtil.mc.player.inventory.currentItem == InventoryUtil.getItemHotbar(item);
+                switchedItemSwitched[1] = back ? true : WurstplusInventoryUtil.mc.player.inventory.currentItem == WurstplusInventoryUtil.getItemHotbar(item);
             }
         }
         return switchedItemSwitched;
@@ -232,11 +232,11 @@ public class WurstplusInventoryUtil {
 
     public static boolean holdingItem(Class clazz) {
         boolean result = false;
-        ItemStack stack = InventoryUtil.mc.player.getHeldItemMainhand();
-        result = InventoryUtil.isInstanceOf(stack, clazz);
+        ItemStack stack = WurstplusInventoryUtil.mc.player.getHeldItemMainhand();
+        result = WurstplusInventoryUtil.isInstanceOf(stack, clazz);
         if (!result) {
-            ItemStack offhand = InventoryUtil.mc.player.getHeldItemOffhand();
-            result = InventoryUtil.isInstanceOf(stack, clazz);
+            ItemStack offhand = WurstplusInventoryUtil.mc.player.getHeldItemOffhand();
+            result = WurstplusInventoryUtil.isInstanceOf(stack, clazz);
         }
         return result;
     }
@@ -258,7 +258,7 @@ public class WurstplusInventoryUtil {
 
     public static int getEmptyXCarry() {
         for (int i = 1; i < 5; ++i) {
-            Slot craftingSlot = (Slot)InventoryUtil.mc.player.inventoryContainer.inventorySlots.get(i);
+            Slot craftingSlot = (Slot)WurstplusInventoryUtil.mc.player.inventoryContainer.inventorySlots.get(i);
             ItemStack craftingStack = craftingSlot.getStack();
             if (!craftingStack.isEmpty() && craftingStack.getItem() != Items.AIR) continue;
             return i;
@@ -267,7 +267,7 @@ public class WurstplusInventoryUtil {
     }
 
     public static boolean isSlotEmpty(int i) {
-        Slot slot = (Slot)InventoryUtil.mc.player.inventoryContainer.inventorySlots.get(i);
+        Slot slot = (Slot)WurstplusInventoryUtil.mc.player.inventoryContainer.inventorySlots.get(i);
         ItemStack stack = slot.getStack();
         return stack.isEmpty();
     }
@@ -325,12 +325,12 @@ public class WurstplusInventoryUtil {
     }
 
     public static int findArmorSlot(EntityEquipmentSlot type, boolean binding, boolean withXCarry) {
-        int slot = InventoryUtil.findArmorSlot(type, binding);
+        int slot = WurstplusInventoryUtil.findArmorSlot(type, binding);
         if (slot == -1 && withXCarry) {
             float damage = 0.0f;
             for (int i = 1; i < 5; ++i) {
                 boolean cursed;
-                Slot craftingSlot = (Slot)InventoryUtil.mc.player.inventoryContainer.inventorySlots.get(i);
+                Slot craftingSlot = (Slot)WurstplusInventoryUtil.mc.player.inventoryContainer.inventorySlots.get(i);
                 ItemStack craftingStack = craftingSlot.getStack();
                 if (craftingStack.getItem() == Items.AIR || !(craftingStack.getItem() instanceof ItemArmor)) continue;
                 ItemArmor armor = (ItemArmor)craftingStack.getItem();
@@ -404,10 +404,10 @@ public class WurstplusInventoryUtil {
 
         public void run() {
             if (this.update) {
-                Util.mc.playerController.updateController();
+                WurstplusUtil.mc.playerController.updateController();
             }
             if (this.slot != -1) {
-                Util.mc.playerController.windowClick(Util.mc.player.inventoryContainer.windowId, this.slot, 0, this.quickClick ? ClickType.QUICK_MOVE : ClickType.PICKUP, (EntityPlayer)Util.mc.player);
+                WurstplusUtil.mc.playerController.windowClick(WurstplusUtil.mc.player.inventoryContainer.windowId, this.slot, 0, this.quickClick ? ClickType.QUICK_MOVE : ClickType.PICKUP, (EntityPlayer)Util.mc.player);
             }
         }
 
