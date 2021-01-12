@@ -49,7 +49,7 @@ public class WurstplusBurrow extends WurstplusHack {
     public void enable() {
         this.lastHotbarSlot = -1;
         this.blockSlot = -1;
-        if (LagBlock.fullNullCheck()) {
+        if (WurstplusBurrow.fullNullCheck()) {
             this.disable();
             return;
         }
@@ -76,7 +76,7 @@ public class WurstplusBurrow extends WurstplusHack {
         WurstplusBlockUtil.placeBlock(this.startPos, this.blockSlot == -2 ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, false, this.packet.getValue(), WurstplusBurrow.mc.player.isSneaking());
         WurstplusInventoryUtil.switchToHotbarSlot(this.lastHotbarSlot, false);
         if (this.invalidPacket.getValue().booleanValue()) {
-            WurstplusBurrow.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Position(LagBlock.mc.player.posX, 1337.0, WurstplusBurrow.mc.player.posZ, true));
+            WurstplusBurrow.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Position(WurstplusBurrow.mc.player.posX, 1337.0, WurstplusBurrow.mc.player.posZ, true));
         }
         this.disable();
     }
