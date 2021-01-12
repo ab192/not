@@ -69,3 +69,26 @@ public class WurstplusOffhandRewriteTwo extends WurstplusHack {
               return;
               }
             }
+
+                     public void swap_items(int slot, int step) {
+        if (slot == -1) return;
+        if (step == 0) {
+            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
+            mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
+            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
+        }
+        if (step == 1) {
+            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
+            switching = true;
+            last_slot = slot;
+        }
+        if (step == 2) {
+            mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
+            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
+            switching = false;
+        }
+
+        mc.playerController.updateController();
+    }
+ }
+                    
