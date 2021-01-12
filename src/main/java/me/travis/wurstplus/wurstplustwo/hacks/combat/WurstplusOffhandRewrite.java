@@ -42,7 +42,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
                   return;
                }
             }
-             if (totem_health.get_value(1) > hp) {
+             if (totem_health.get_value(1) >= hp) {
                if (mode.in("Crystal")) {
                swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
                return;
@@ -56,7 +56,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
                }
             }  
             
-             if (totem_health.get_value(1) > hp) {
+             if (totem_health.get_value(1) >= hp) {
                if (mode.in("Gapple")) {
                swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
                return
@@ -70,7 +70,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
               }
             }  
             
-            if (totem_health.get_value(1) > hp) {
+            if (totem_health.get_value(1) >= hp) {
               if (mode.in("Totem")) {
               swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
               return;
