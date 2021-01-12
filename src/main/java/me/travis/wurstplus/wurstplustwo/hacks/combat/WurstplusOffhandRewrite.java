@@ -1,6 +1,13 @@
 package me.travis.wurstplus.wurstplustwo.hacks.combat;
 
-//import
+import me.travis.wurstplus.Wurstplus;
+import me.travis.wurstplus.wurstplustwo.guiscreen.settings.WurstplusSetting;
+import me.travis.wurstplus.wurstplustwo.hacks.WurstplusCategory;
+import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.item.Item;
 
 public class WurstplusOffhandRewrite extends WurstplusHack {
        public class WurstplusOffhandRewrite() {
