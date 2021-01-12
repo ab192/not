@@ -14,11 +14,8 @@ public class WurstplusReverseStep extends WurstplusHack {
              
              @override
              public void update() {
-             
-             if (mode.in("Reverse")) {
-
-            mc.player.motionY = -1;
-// literally one line :O
-        }
+                        
+              mc.player.motionY = -1;
+              return;
      }
   }
