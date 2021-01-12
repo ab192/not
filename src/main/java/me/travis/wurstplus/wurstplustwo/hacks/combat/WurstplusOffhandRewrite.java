@@ -25,7 +25,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
         }
         
         WurstplusSetting mode = create("Offhand", combobox("Crystal"));
-        WurstplusSetting OffhandHP = create("OffhandHealth", 16, 0, 36);
+        WurstplusSetting offhandHP = create("OffhandHealth", 16, 0, 36);
         WurstplusSetting delay = create("delay", false)
           
         WurstplusSetting disableOnHealth = create("DisableOnHealth"), false;
@@ -48,7 +48,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
            
            float hp = mc.player.getHealth() + mc.player.getAbsorptionAmount();
            
-           if (hp > OffhandHP.get_value(1)) {
+           if (hp > offhandHP.get_value(1)) {
              if (mode.in("Crystal") swap_items(get_item_slot(Items.END_CRYSTAL),0));
              return;
             }
