@@ -2,12 +2,12 @@ package me.travis.wurstplus.wurstplustwo.hacks.combat;
 
 //import
 
-public class WurstplusOffhandRewriteTwo extends WurstplusHack {
-       public class WurstplusOffhandRewriteTwo() {
+public class WurstplusOffhandRewrite extends WurstplusHack {
+       public class WurstplusOffhandRewrite() {
               super(WurstplusCategory.WURSTPLUS_COMBAT);
               
-              this.tag         = "Offhand Rewrite Two";
-              this.name        = "OffhandRewriteTwo";
+              this.tag         = "Offhand Rewrite";
+              this.name        = "OffhandRewrite";
               this.description = "Offhand rewrite with no pasting";
              }
              
