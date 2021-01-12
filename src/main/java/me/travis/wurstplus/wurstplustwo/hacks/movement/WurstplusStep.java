@@ -16,7 +16,7 @@ public class WurstplusStep extends WurstplusHack {
 		this.description = "Move up / down block big";
     }
 
-    WurstplusSetting mode = create("Mode", "StepMode", "Normal", combobox("Normal", "Reverse"));
+    WurstplusSetting mode = create("Mode", "StepMode", "Normal", combobox("Normal", "Vanilla"));
 
     @Override
     public void update() {
@@ -56,12 +56,6 @@ public class WurstplusStep extends WurstplusHack {
                 mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.7531999805212, mc.player.posZ, mc.player.onGround));
                 mc.player.setPosition(mc.player.posX, mc.player.posY + 1.0, mc.player.posZ);
             }
-
-        }
-
-        if (mode.in("Reverse")) {
-
-            mc.player.motionY = -1;
 
         }
 
