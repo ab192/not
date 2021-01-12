@@ -9,13 +9,13 @@ import me.travis.wurstplus.wurstplustwo.util.WurstplusMessageUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 
-public class WurstplusAutoMine extends WurstplusHack {
+public class WurstplusAutoCity extends WurstplusHack {
 
-    public WurstplusAutoMine() {
+    public WurstplusAutoCity() {
         super(WurstplusCategory.WURSTPLUS_COMBAT);
 
-        this.name        = "Auto Mine";
-        this.tag         = "AutoMine";
+        this.name        = "Auto City";
+        this.tag         = "AutoCity";
         this.description = "jumpy is now never going to use the client again";
     }
 
