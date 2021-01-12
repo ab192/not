@@ -30,6 +30,7 @@ public class WurstplusHoleESP extends WurstplusHack {
 	WurstplusSetting off_set 			= create("Height", "HoleESPOffSetSide", 0.2, 0.0, 1.0);
 	WurstplusSetting range   			= create("Range", "HoleESPRange", 6, 1, 12);
 	WurstplusSetting hide_own         	= create("Hide Own", "HoleESPHideOwn", true);
+
 	WurstplusSetting bedrock_view 		= create("info", "HoleESPbedrock", "Bedrock");
 	WurstplusSetting bedrock_enable 	= create("Bedrock Holes", "HoleESPBedrockHoles", true);
 	// WurstplusSetting rgb_b 				= create("RGB Effect", "HoleColorRGBEffect", true);
@@ -37,6 +38,7 @@ public class WurstplusHoleESP extends WurstplusHack {
 	WurstplusSetting gb 				= create("G", "HoleESPGb", 255, 0, 255);
 	WurstplusSetting bb 				= create("B", "HoleESPBb", 0, 0, 255);
 	WurstplusSetting ab				    = create("A", "HoleESPAb", 50, 0, 255);
+
 	WurstplusSetting obsidian_view 		= create("info", "HoleESPObsidian", "Obsidian");
 	WurstplusSetting obsidian_enable	= create("Obsidian Holes", "HoleESPObsidianHoles", true);
 	// WurstplusSetting rgb_o 				= create("RGB Effect", "HoleColorRGBEffect", true);
@@ -44,9 +46,6 @@ public class WurstplusHoleESP extends WurstplusHack {
 	WurstplusSetting go				    = create("G", "HoleESPGo", 0, 0, 255);
 	WurstplusSetting bo 				= create("B", "HoleESPBo", 0, 0, 255);
 	WurstplusSetting ao 				= create("A", "HoleESPAo", 50, 0, 255);
-	WurstplusSetting dual_view 		= create("info", "HoleESPDual", "Double");
-	WurstplusSetting dual_enable	= create("Dual Holes", "HoleESPTwoHoles", false);
-
 
 	WurstplusSetting line_a = create("Outline A", "HoleESPLineOutlineA", 255, 0, 255);
 
@@ -155,167 +154,37 @@ public class WurstplusHoleESP extends WurstplusHack {
 
 				safe_sides = 0;
 
-				int air_orient =-1;
-				int counter    = 0;
-
-				for (BlockPos seems_blocks : new BlockPos[]{
-						new BlockPos( 0,-1, 0),
-						new BlockPos( 0, 0,-1),
-						new BlockPos( 1, 0, 0),
-						new BlockPos( 0, 0, 1),
-						new BlockPos(-1, 0, 0)
+				for (BlockPos seems_blocks : new BlockPos[] {
+				new BlockPos( 0, -1,  0),
+				new BlockPos( 0,  0, -1),
+				new BlockPos( 1,  0,  0),
+				new BlockPos( 0,  0,  1),
+				new BlockPos(-1,  0,  0)
 				}) {
 					Block block = mc.world.getBlockState(pos.add(seems_blocks)).getBlock();
 
 					if (block != Blocks.BEDROCK && block != Blocks.OBSIDIAN && block != Blocks.ENDER_CHEST && block != Blocks.ANVIL) {
 						possible = false;
 
-						if (counter == 0) break;
-
-						if (air_orient != -1) {
-							air_orient = -1;
-							break;
-						}
-
-						if (block.equals(Blocks.AIR)) {
-								air_orient = counter;
-						} else {
-							break;
-						}
+						break;
 					}
 
 					if (block == Blocks.BEDROCK) {
 						safe_sides++;
-						
 					}
-						counter++;
 				}
 
 				if (possible) {
 					if (safe_sides == 5) {
 						if (!this.bedrock_enable.get_value(true)) continue;
-						holes.add(new WurstplusPair<BlockPos, Boolean>(pos, true));
+						holes.add(new WurstplusPair<BlockPos,Boolean>(pos, true));
 					} else {
 						if (!this.obsidian_enable.get_value(true)) continue;
-						holes.add(new WurstplusPair<BlockPos, Boolean>(pos, false));
-					}
-					continue;
-				}
-
-				if (!this.dual_enable.get_value(true) || air_orient < 0) continue;
-				BlockPos second_pos = pos.add(orientConv(air_orient));
-				if (checkDual(second_pos, air_orient)) {
-
-					boolean low_ceiling_hole = mc.world.getBlockState(second_pos.add(0,1,0)).getBlock().equals(Blocks.AIR) &&
-
-							!mc.world.getBlockState(second_pos.add(0,2,0)).getBlock().equals(Blocks.AIR);
-							// to avoid rendering the same hole twice
-
-					if(safe_sides == 8) {
-						holes.add(new WurstplusPair<BlockPos, Boolean>(pos, true));
-						if (low_ceiling_hole) holes.add(new WurstplusPair<BlockPos, Boolean>(second_pos, true));
-					}
-					else
-						holes.add(new WurstplusPair<BlockPos, Boolean>(pos, false));
-						if (low_ceiling_hole) holes.add(new WurstplusPair<BlockPos, Boolean>(second_pos, false));
+						holes.add(new WurstplusPair<BlockPos,Boolean>(pos, false));
 					}
 				}
 			}
 		}
-	}
-	private BlockPos orientConv(int orient_count) {
-		BlockPos converted = null;
-
-		switch(orient_count) {
-			case 0:
-			//return EnumFacing.DOWN.getDirectionVec();
-				converted = new BlockPos( 0, -1,  0);
-				break;
-			case 1:
-				//return EnumFacing.NORTH.getDirectionVec();
-				converted = new BlockPos( 0,  0, -1);
-				break;
-			case 2:
-				//return EnumFacing.EAST.getDirectionVec();
-				converted = new BlockPos( 1,  0,  0);
-				break;
-			case 3:
-				//return EnumFacing.SOUTH.getDirectionVec();
-				converted = new BlockPos( 0,  0,  1);
-				break;
-			case 4:
-				//return EnumFacing.WEST.getDirectionVec();
-				converted = new BlockPos(-1,  0,  0);
-				break;
-			case 5:
-				converted = new BlockPos(0,  1,  0);
-				break;
-		}
-		return converted;
-	}
-
-	private int oppositeIntOrient(int orient_count) {
-
-		int opposite = 0;
-
-		switch(orient_count)
-		{
-			case 0:
-				opposite = 5;
-				break;
-			case 1:
-				opposite = 3;
-				break;
-			case 2:
-				opposite = 4;
-				break;
-			case 3:
-				opposite = 1;
-				break;
-			case 4:
-				opposite = 2;
-				break;
-		}
-		return opposite;
-	}
-
-	private boolean checkDual(BlockPos second_block, int counter) {
-		int i = -1;
-
-		/*
-			lets check down from second block to not have esp of a dual hole of one space
-			missing a bottom block
-		*/
-		for (BlockPos seems_blocks : new BlockPos[] {
-			new BlockPos( 0,  -1, 0), //Down
-			new BlockPos( 0,  0, -1), //N
-			new BlockPos( 1,  0,  0), //E
-			new BlockPos( 0,  0,  1), //S
-			new BlockPos(-1,  0,  0)  //W
-
-		}) {
-			i++;
-			//skips opposite direction check, since its air
-
-
-
-			if(counter == oppositeIntOrient(i)) {
-				continue;
-			}
-
-
-
-			Block block = mc.world.getBlockState(second_block.add(seems_blocks)).getBlock();
-			if (block != Blocks.BEDROCK && block != Blocks.OBSIDIAN && block != Blocks.ENDER_CHEST && block != Blocks.ANVIL) {
-				return false;
-			}
-
-			if (block == Blocks.BEDROCK) {
-				safe_sides++;
-			}
-
-		}
-		return true;
 	}
 
 	@Override
