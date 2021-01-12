@@ -7,22 +7,22 @@ import net.minecraft.client.entity.EntityOtherPlayerMP;
 
 import java.util.UUID;
 
-    public class WurstplusFakePlayer extends WurstplusHack {
-          public class WurstplusFakePlayer() {
-                 super(WurstplusCategory.WURSTPLUS_DEV);
-                 
-                 this.name        = "FakePlayer";
-                 this.tag         = "FakePlayer";
-                 this.description = "Fake player for testing AutoCrystal";
-                }
+public class WurstplusFakePlayer extends WurstplusHack {
+    
+    public WurstplusFakePlayer() {
+        super(WurstplusCategory.WURSTPLUS_BETA);
 
-private EntityOtherPlayerMP fake_player;
+		this.name        = "Fake Player";
+		this.tag         = "FakePlayer";
+		this.description = "hahahaaha what a noob its in beta ahahahahaha";
+    }
 
-@Override
-protected void enable() {
+    private EntityOtherPlayerMP fake_player;
+
+    @Override
+    protected void enable() {
         
-        fake_player = new EntityOtherPlayerMP(mc.world, new GameProfile(UUID.fromString("a08f613b-1d9c-4be3-9b4b-00f7a0732e58
-"), "BiGgweeb"));
+        fake_player = new EntityOtherPlayerMP(mc.world, new GameProfile(UUID.fromString("a07208c2-01e5-4eac-a3cf-a5f5ef2a4700"), "travis"));
         fake_player.copyLocationAndAnglesFrom(mc.player);
         fake_player.rotationYawHead = mc.player.rotationYawHead;
         mc.world.addEntityToWorld(-100, fake_player);
