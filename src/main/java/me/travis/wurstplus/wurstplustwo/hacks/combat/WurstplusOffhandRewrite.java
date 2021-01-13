@@ -51,21 +51,21 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
                 }
             }
 
-            if (hp > totem_health.get_value(1)) {
+            if (hp > totem_health.get_value()) {
                 if (mode.in("Gapple")) {
                     swap_items(get_item_slot(Items.GOLDEN_APPLE))
                     return;
                 }
             }
 
-            if (totem_health.get_value(1) >= hp) {
+            if (totem_health.get_value() >= hp) {
                 if (mode.in("Gapple")) {
                     swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
                     return;
                 }
             }
 
-            if (hp > totem_health.get_value(1)) {
+            if (hp > totem_health.get_value()) {
                 if (mode.in("Totem")) {
                     swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
                     return;
@@ -73,7 +73,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
             }
 
             if (disable.get_value(true)) {
-                if (disableHP.get_value(1) >= hp) {
+                if (disableHP.get_value() >= hp) {
                     WurstplusMessageUtil.send_client_message("Disabling due to health requirement...");
                     this.set_disable();
                 }
