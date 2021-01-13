@@ -72,13 +72,6 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
                 }
             }
 
-            if (totem_health.get_value(1) >= hp) {
-                if (mode.in("Totem")) {
-                    swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
-                    return;
-                }
-            }
-
             if (disable.get_value(true)) {
                 if (disableHP.get_value(1) >= hp) {
                     WurstplusMessageUtil.send_client_message("Disabling due to health requirement...");
