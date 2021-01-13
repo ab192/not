@@ -80,7 +80,7 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
             }
 
             if (disable.get_value(true)) {
-                if (disableHP.get_value() >= hp) {
+                if (disableHP.get_value(1) >= hp) {
                     WurstplusMessageUtil.send_client_message("Disabling due to health requirement...");
                     this.set_disable();
                 }
