@@ -1,111 +1,85 @@
-package me.travis.wurstplus.wurstplustwo.hacks.combat;
+package me.travis.wurstplus.wurstplustwo.hacks.movement;
 
-import me.travis.wurstplus.Wurstplus;
 import me.travis.wurstplus.wurstplustwo.guiscreen.settings.WurstplusSetting;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusCategory;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.item.Item;
+import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.util.math.AxisAlignedBB;
 
-public class WurstplusOffhandRewrite extends WurstplusHack {
-       public class WurstplusOffhandRewrite() {
-              super(WurstplusCategory.WURSTPLUS_COMBAT);
-              
-              this.tag         = "Offhand Rewrite";
-              this.name        = "OffhandRewrite";
-              this.description = "Offhand rewrite with no pasting";
-             }
-             
-             WurstplusSetting mode = create("Offhand", combobox("Crystal", "Gapple", "Totem"));
-             WurstplusSetting totem_health = create("TotemHealth", 16, 1, 20);
-       
-             WurstplusSetting disable = create("DisableOnHealth", false);
-             WurstplusSetting disableHP = create("DisableOnHealthHP", 16, 1, 20);      
-       
-             private boolean switching = false;
-             private int last_slot;
-             
-             @Override
-             public void update() {
-             
-             if (mc.currentScreen == null || mc.currentScreen instanceof GuiInventory) {
+public class WurstplusStep extends WurstplusHack {
 
-            if (switching) {
-                swap_items(last_slot);
-                return;
-            }
-             
-             float hp = mc.player.getHealth() + mc.player.getAbsorptionAmount();
-             
-             if (hp > totem_health.get_value()) {
-               if (mode.in("Crystal")) {
-                  swap_items(get_item_slot(Items.END_CRYSTAL))
-                  return;
-               }
-            }
-             if (totem_health.get_value() >= hp) {
-               if (mode.in("Crystal")) {
-               swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
-               return;
-               }
-            }
-               
-             if (hp > totem_health.get_value(1)) {
-               if (mode.in("Gapple")) {
-               swap_items(get_item_slot(Items.GOLDEN_APPLE))
-               return;
-               }
-            }  
-            
-             if (totem_health.get_value(1) >= hp) {
-               if (mode.in("Gapple")) {
-               swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
-               return
-               }
-            }
-            
-            if (hp > totem_health.get_value(1)) {
-              if (mode.in("Totem")) {
-              swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
-              return;
-              }
-            }  
-            
-            if (totem_health.get_value(1) >= hp) {
-              if (mode.in("Totem")) {
-              swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
-              return;
-              }
-            }
+    public WurstplusStep() {
+        super(WurstplusCategory.WURSTPLUS_MOVEMENT);
 
-                    if (disable.get_value(true)) {
-                      if(disableHP.get_value() >= hp) {
-                     WurstplusMessageUtil.send_client_message("Disabling due to health requirement...");        
-                     this.set_disable();
-                     return;
-                            }
-                    }
-                     public void swap_items(int slot, int step) {
-        if (slot == -1) return;
-        if (step == 0) {
-            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-            mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
-            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-        }
-        if (step == 1) {
-            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-            switching = true;
-            last_slot = slot;
-        }
-        if (step == 2) {
-            mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
-            mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-            switching = false;
-        }
-
-        mc.playerController.updateController();
+        this.name = "Step";
+        this.tag = "Step";
+        this.description = "Move up / down block big";
     }
- }
-                    
+
+    WurstplusSetting mode = create("Mode", "StepMode", "Normal", combobox("Normal", "Vanilla"));
+
+
+    @Override
+    public void disable() {
+        if ((mc.player == null) || (mc.world == null)) return;
+        mc.player.stepHeight = 0.6F;
+    }
+
+
+    @Override
+    public void update() {
+        if ((mc.player == null) || (mc.world == null)) return;
+        if (mode.in("Normal")) {
+            if ((mc.player.moveForward != 0) && (mc.player.moveStrafing != 0) && mc.player.collidedHorizontally) {
+                if (mc.player.onGround && !mc.player.isOnLadder() && !mc.player.isInWater() && !mc.player.isInLava() && !mc.player.movementInput.jump && !mc.player.noClip) {
+                    double n = getNormal();
+                    if ((n < 0.0D) || (n > 2.0D)) {
+                        return;
+                    }
+                    if (n == 2.0D) {
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.42, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.78, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.63, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.51, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.9, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.21, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.45, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.43, mc.player.posZ, mc.player.onGround));
+                        mc.player.setPosition(mc.player.posX, mc.player.posY + 2.0, mc.player.posZ);
+                    } else if (n == 1.5D) {
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.41999998688698, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.7531999805212, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.00133597911214, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.16610926093821, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.24918707874468, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.1707870772188, mc.player.posZ, mc.player.onGround));
+                        mc.player.setPosition(mc.player.posX, mc.player.posY + 1.0, mc.player.posZ);
+                    } else if (n == 1.0D) {
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.41999998688698, mc.player.posZ, mc.player.onGround));
+                        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.7531999805212, mc.player.posZ, mc.player.onGround));
+                        mc.player.setPosition(mc.player.posX, mc.player.posY + 1.0, mc.player.posZ);
+                    }
+                }
+            }
+        } else if (mode.in("Vanilla")) {
+            mc.player.stepHeight = 2.0F;
+        }
+    }
+
+
+    public double getNormal() {
+        mc.player.stepHeight = 0.6F;
+        AxisAlignedBB grow = mc.player.getEntityBoundingBox().offset(0, 0.05, 0).grow(0.05);
+
+        if (!mc.world.getCollisionBoxes(mc.player, grow.offset(0, 2, 0)).isEmpty()) {
+            return 100;
+        }
+        double maxY = -1;
+        for (AxisAlignedBB aabb : mc.world.getCollisionBoxes(mc.player, grow)) {
+            if (aabb.maxY > maxY) {
+                maxY = aabb.maxY;
+            }
+        }
+        return maxY - mc.player.posY;
+    }
+}
