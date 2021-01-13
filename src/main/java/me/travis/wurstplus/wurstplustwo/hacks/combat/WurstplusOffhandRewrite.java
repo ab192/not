@@ -100,4 +100,29 @@ public class WurstplusOffhandRewrite extends WurstplusHack {
         }
         mc.playerController.updateController();
     }
+/*
+      if (hp > totem_health.get_value()) {
+        if (mode.in("Crystal")) {
+        swap_items(get_item_slot(Items.END_CRYSTAL))
+            }
+         
+        if (mode.in("Gapple")) {
+        swap_items(get_item_slot(Items.GOLDEN_APPLE))
+            }
+        
+        if (mode.in("Totem")) {
+        swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
+            }
+            
+      else {
+        if (mode.in("Crystal")) {
+        swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
+            }
+        
+        if (mode.in("Gapple")) {
+        swap_items(get_item_slot(Items.TOTEM_OF_UNDYING))
+            }
+        }
+    }
+*/ 
 }
