@@ -64,6 +64,7 @@ public class WurstplusStep extends WurstplusHack {
 		    WurstplusStep mc.player.stepHeight = 2.0f
 		    return;
 		    }
+		}
 
     public double get_n_normal() {
 
