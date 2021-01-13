@@ -18,8 +18,16 @@ public class WurstplusStep extends WurstplusHack {
 
     WurstplusSetting mode = create("Mode", "StepMode", "Normal", combobox("Normal", "Vanilla"));
 
+		
+    @Override
+    public void disable() {
+    if (mc.player == null) return;
+	    mc.player.stepHeight = 0.6f;
+    }
+	
     @Override
     public void update() {
+             if (mc.player == null) return;           
 
         if (!mc.player.collidedHorizontally && mode.in("Normal")) return;
         if (!mc.player.onGround || mc.player.isOnLadder() || mc.player.isInWater() || mc.player.isInLava() || mc.player.movementInput.jump || mc.player.noClip) return;
@@ -61,8 +69,7 @@ public class WurstplusStep extends WurstplusHack {
 
     }
 		    if (mode.in("Vanilla)) {
-		    WurstplusStep mc.player.stepHeight = 2.0f
-		    return;
+		    mc.player.stepHeight = 2.0f
 		    }
 		}
 
