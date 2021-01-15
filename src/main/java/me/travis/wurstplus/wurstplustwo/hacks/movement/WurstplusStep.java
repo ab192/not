@@ -82,3 +82,4 @@ public class WurstplusStep extends WurstplusHack {
         }
         return maxY - mc.player.posY;
     }
+}
