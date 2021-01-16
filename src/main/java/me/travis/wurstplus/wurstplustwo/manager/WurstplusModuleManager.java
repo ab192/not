@@ -61,6 +61,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusAutoGapple());
 		add_hack(new WurstplusAutoTotem());
 		add_hack(new WurstplusAutoMine());
+		add_hack(new WurstplusOffhandRewrite());
 
 		// Exploit.
 		add_hack(new WurstplusXCarry());
@@ -71,13 +72,14 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusBuildHeight());
 		add_hack(new WurstplusCoordExploit());
 		add_hack(new WurstplusNoHandshake());
+		add_hack(new WurstplusSpeedmine());
+
 
 		// Movement.
 		add_hack(new WurstplusStrafe());
 		add_hack(new WurstplusStep());
 		add_hack(new WurstplusSprint());
 		add_hack(new WurstPlusAnchor());
-		add_hack_new WurstplusBurrow());
 		
 		// Render.
 		add_hack(new WurstplusHighlight());
@@ -94,6 +96,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusCapes());
 		add_hack(new WurstplusAlwaysNight());
 		add_hack(new WurstplusCityEsp());
+		add_hack(new WurstplusLogSpots());
 
 		// Misc.
 		add_hack(new WurstplusMiddleClickFriends());
@@ -101,7 +104,6 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusAutoReplenish());
 		add_hack(new WurstplusAutoNomadHut());
 		add_hack(new WurstplusFastUtil());
-		add_hack(new WurstplusSpeedmine());
 
 		// Dev
 		add_hack(new WurstplusFakePlayer());
