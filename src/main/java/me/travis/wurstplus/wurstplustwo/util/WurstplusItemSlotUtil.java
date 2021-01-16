@@ -11,6 +11,6 @@ public class WurstplusItemSlotUtil {
         if (input == mc.player.getHeldItemOffhand().getItem()) return -1;
         for(int i = 36; i >= 0; i--) {
             final Item item = mc.player.inventory.getStackInSlot(i).getItem();
-            }
-    }
+     }
+}
  
